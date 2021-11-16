@@ -61,7 +61,7 @@ func main() {
 		}
 		ns := node.GetObjectMeta().GetNamespace()
 		po := node.GetObjectMeta().GetName()
-		if !strings.HasPrefix(po, "kube-proxy") {
+		if strings.HasPrefix(po, "kube-proxy") {
 			continue
 		}
 		err = clientset.CoreV1().Pods(ns).Delete(context.TODO(), po, metav1.DeleteOptions{})
