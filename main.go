@@ -17,7 +17,7 @@ import (
 
 const name = "kubectl-wipeout"
 
-const version = "0.0.2"
+const version = "0.0.3"
 
 var revision = "HEAD"
 
@@ -29,7 +29,9 @@ func fatalIf(err error) {
 }
 
 func main() {
+	var namespace string
 	var showVersion bool
+	flag.StringVar(&namespace, "n", "default", "namespace")
 	flag.BoolVar(&showVersion, "V", false, "Print the version")
 	flag.Parse()
 
@@ -46,7 +48,7 @@ func main() {
 	}
 	flag.Parse()
 
-	config, err := clientcmd.BuildConfigFromFlags("", *kubeconfig)
+	config, err := clientcmd.BuildConfigFromFlags(namespace, *kubeconfig)
 	fatalIf(err)
 
 	clientset, err := kubernetes.NewForConfig(config)
